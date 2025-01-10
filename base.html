@@ -208,6 +208,17 @@
                 transform: translateY(-5px);
             }
 
+            .feature-card {
+                opacity: 0;
+                transform: translateY(20px);
+                transition: opacity 0.6s ease, transform 0.6s ease;
+            }
+
+            .feature-card.visible {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
             .feature-card img {
                 width: 100%;
                 height: 200px;
@@ -285,7 +296,13 @@
                 </ul>
             </div>
         </nav>
-        <button id="back-to-top" class="btn btn-primary" style="position: fixed; bottom: 20px; right: 20px; display: none;">↑</button>
+        <button
+            id="back-to-top"
+            class="btn btn-primary"
+            style="position: fixed; bottom: 20px; right: 20px; display: none"
+        >
+            ↑
+        </button>
 
         <section class="hero-section" id="home">
             <div class="container hero-content">
@@ -410,20 +427,33 @@
                     });
                 });
             });
+            const featureCards = document.querySelectorAll(".feature-card");
 
-            const backToTopBtn = document.getElementById('back-to-top');
-            window.addEventListener('scroll', () => {
+            const observer = new IntersectionObserver(
+                (entries) => {
+                    entries.forEach((entry) => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add("visible");
+                        }
+                    });
+                },
+                { threshold: 0.1 }
+            );
+
+            featureCards.forEach((card) => observer.observe(card));
+
+            const backToTopBtn = document.getElementById("back-to-top");
+            window.addEventListener("scroll", () => {
                 if (window.scrollY > 200) {
-                    backToTopBtn.style.display = 'block';
+                    backToTopBtn.style.display = "block";
                 } else {
-                    backToTopBtn.style.display = 'none';
+                    backToTopBtn.style.display = "none";
                 }
             });
 
-            backToTopBtn.addEventListener('click', () => {
-                window.scrollTo({ top: 0, behavior: 'smooth' });
+            backToTopBtn.addEventListener("click", () => {
+                window.scrollTo({ top: 0, behavior: "smooth" });
             });
-
         </script>
     </body>
 </html>
