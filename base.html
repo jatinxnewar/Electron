@@ -441,25 +441,32 @@
             );
 
             function toggleTheme() {
-    const body = document.body;
-    const icon = document.querySelector('.theme-toggle i');
-    const isDarkMode = body.getAttribute('data-theme') === 'dark';
+                const body = document.body;
+                const icon = document.querySelector(".theme-toggle i");
+                const isDarkMode = body.getAttribute("data-theme") === "dark";
 
-    if (isDarkMode) {
-        body.removeAttribute('data-theme');
-        icon.classList.remove('fa-sun');
-        icon.classList.add('fa-moon');
-        localStorage.setItem('theme', 'light');
-    } else {
-        body.setAttribute('data-theme', 'dark');
-        icon.classList.remove('fa-moon');
-        icon.classList.add('fa-sun');
-        localStorage.setItem('theme', 'dark');
-    }
-}
-
-
-
+                if (isDarkMode) {
+                    body.removeAttribute("data-theme");
+                    icon.classList.remove("fa-sun");
+                    icon.classList.add("fa-moon");
+                    localStorage.setItem("theme", "light");
+                } else {
+                    body.setAttribute("data-theme", "dark");
+                    icon.classList.remove("fa-moon");
+                    icon.classList.add("fa-sun");
+                    localStorage.setItem("theme", "dark");
+                }
+            }
+            // Load theme on page load
+            document.addEventListener("DOMContentLoaded", () => {
+                const savedTheme = localStorage.getItem("theme");
+                if (savedTheme === "dark") {
+                    document.body.setAttribute("data-theme", "dark");
+                    document
+                        .querySelector(".theme-toggle i")
+                        .classList.replace("fa-moon", "fa-sun");
+                }
+            });
 
             featureCards.forEach((card) => observer.observe(card));
 
