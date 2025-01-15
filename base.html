@@ -21,6 +21,60 @@
                 --border-color: #ddd;
             }
 
+            .hamburger {
+                display: none;
+                flex-direction: column;
+                cursor: pointer;
+                gap: 4px;
+            }
+
+            .hamburger span {
+                width: 25px;
+                height: 3px;
+                background-color: var(--text-color);
+                transition: all 0.3s ease;
+            }
+
+            .nav-list {
+                display: flex;
+                list-style: none;
+                margin: 0;
+                padding: 0;
+                gap: 1.5rem;
+                align-items: center;
+            }
+
+            .nav-list.mobile {
+                flex-direction: column;
+                position: absolute;
+                top: 70px;
+                right: 20px;
+                background: var(--card-bg);
+                box-shadow: 0 4px 8px var(--shadow-color);
+                border-radius: 8px;
+                padding: 1rem;
+                display: none;
+            }
+
+            .nav-list.mobile.active {
+                display: flex;
+            }
+
+            .nav-list.mobile .nav-link {
+                padding: 10px 0;
+                text-align: center;
+            }
+
+            @media (max-width: 768px) {
+                .hamburger {
+                    display: flex;
+                }
+
+                .nav-list {
+                    display: none;
+                }
+            }
+
             [data-theme="dark"] {
                 --primary-color: #ecf0f1;
                 --accent-color: #3498db;
@@ -280,7 +334,12 @@
                     <i class="fas fa-bolt"></i>
                     <h3>Electron</h3>
                 </a>
-                <ul class="nav-list">
+                <div class="hamburger" id="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                <ul class="nav-list mobile" id="mobile-nav">
                     <li><a href="#home" class="nav-link">Home</a></li>
                     <li>
                         <a href="#marketplace" class="nav-link">Marketplace</a>
@@ -296,6 +355,7 @@
                 </ul>
             </div>
         </nav>
+
         <button
             id="back-to-top"
             class="btn btn-primary"
@@ -507,6 +567,18 @@
             backToTopBtn.addEventListener("click", () => {
                 window.scrollTo({ top: 0, behavior: "smooth" });
             });
+
+            const hamburger = document.getElementById("hamburger");
+            const mobileNav = document.getElementById("mobile-nav");
+
+            hamburger.addEventListener("click", () => {
+                mobileNav.classList.toggle("active");
+            });
+
+            // Close menu when a link is clicked
+            document.querySelectorAll(".nav-list.mobile .nav-link").forEach((link) => {
+                link.addEventListener("click", () => {
+                    mobileNav.classList.remove("active");
         </script>
     </body>
 </html>
